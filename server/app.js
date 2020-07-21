@@ -2,8 +2,15 @@ const express = require('express');
 const {graphqlHTTP} = require('express-graphql');
 const schema = require('../schema/schema');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors());
+app.use('/graphql', graphqlHTTP({
+    schema,
+    graphiql: true
+}));
 
 mongoose.connect(
     `mongodb+srv://miklasfafara:7455718@cluster0.ggsfc.mongodb.net/react-apollo-course?retryWrites=true&w=majority`,
@@ -21,8 +28,3 @@ mongoose.connect(
 }).catch(err => {
     console.log(err);
 });
-
-app.use('/graphql', graphqlHTTP({
-    schema,
-    graphiql: true
-}));
