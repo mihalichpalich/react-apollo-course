@@ -145,14 +145,17 @@ const Query = new GraphQLObjectType({ //запросы на получение �
         },
         movies: {
             type: new GraphQLList(MovieType),
-            resolve(parents, args) {
-                return Movies.find({})
+            args: {name: {type: GraphQLString}},
+            resolve(parents, {name}) {
+                return Movies.find({name: {$regex: name, $options: "i"}}) //опции поиска: введенное название -
+                // регулярное выражение, $options: "i" - нечувствительность к регистру
             }
         },
         directors: {
             type: new GraphQLList(DirectorType),
-            resolve(parents, args) {
-                return Directors.find({})
+            args: {name: {type: GraphQLString}},
+            resolve(parents, {name}) {
+                return Directors.find({name: {$regex: name, $options: "i"}})
             }
         },
     }
