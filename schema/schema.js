@@ -100,13 +100,13 @@ const Mutation = new GraphQLObjectType({
                     .then((res) => {
                         if (res.length > 0) {
                             throw Error("Directors with movies cannot be removed")
+                        } else {
+                            return Directors.findByIdAndRemove(id)
                         }
                     })
                     .catch(err => {
                         throw err
                     });
-
-                return Directors.findByIdAndRemove(id)
             }
         },
         deleteMovie: {
