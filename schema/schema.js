@@ -95,6 +95,17 @@ const Mutation = new GraphQLObjectType({
             type: DirectorType,
             args: {id: {type: GraphQLID}},
             resolve(parents, {id}) {
+                 Movies
+                    .find({directorId: id})
+                    .then((res) => {
+                        if (res.length > 0) {
+                            throw Error("Directors with movies cannot be removed")
+                        }
+                    })
+                    .catch(err => {
+                        throw err
+                    });
+
                 return Directors.findByIdAndRemove(id)
             }
         },
