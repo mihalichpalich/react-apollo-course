@@ -16,7 +16,8 @@ mongoose.connect(
     `mongodb+srv://miklasfafara:7455718@cluster0.ggsfc.mongodb.net/react-apollo-course?retryWrites=true&w=majority`,
     {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: true
     }
 ).then(() => {
     app.listen(process.env.PORT || 3001, function (err) {

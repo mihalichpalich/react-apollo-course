@@ -46,6 +46,10 @@ const Mutation = new GraphQLObjectType({
                 age: {type: new GraphQLNonNull(GraphQLInt)}
             },
             resolve(parents, {name, age}) {
+                if (name === '') {
+                    throw new Error("Director's name should not be empty");
+                }
+
                 const director = new Directors({
                     name,
                     age
@@ -64,6 +68,18 @@ const Mutation = new GraphQLObjectType({
                 rate: {type: GraphQLInt}
             },
             resolve(parents, {name, genre, directorId, watched, rate}) {
+                if (name === '') {
+                    throw new Error("Movies's name should not be empty");
+                }
+
+                if (genre === '') {
+                    throw new Error("Movies's genre should not be empty");
+                }
+
+                if (directorId === '') {
+                    throw new Error("Movies's director is not chosen");
+                }
+
                 const movie = new Movies({
                     name,
                     genre,
@@ -97,6 +113,10 @@ const Mutation = new GraphQLObjectType({
                 age: {type: new GraphQLNonNull(GraphQLInt)}
             },
             resolve(parents, {id, name, age}) {
+                if (name === '') {
+                    throw new Error("Director's name should not be empty");
+                }
+
                 return Directors.findByIdAndUpdate(
                     id,
                     {$set: {name, age}},
@@ -115,6 +135,18 @@ const Mutation = new GraphQLObjectType({
                 rate: {type: GraphQLInt}
             },
             resolve(parents, {id, name, genre, directorId, watched, rate}) {
+                if (name === '') {
+                    throw new Error("Movies's name should not be empty");
+                }
+
+                if (genre === '') {
+                    throw new Error("Movies's genre should not be empty");
+                }
+
+                if (directorId === '') {
+                    throw new Error("Movies's director is not chosen");
+                }
+
                 return Movies.findByIdAndUpdate(
                     id,
                     {$set: {name, genre, directorId, watched, rate}},
