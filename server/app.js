@@ -14,7 +14,7 @@ const server = new ApolloServer({
     introspection: true
 });
 
-server.listen().then(({url}) => {
+server.listen({ port: process.env.PORT || 4000 }).then(({url}) => {
     mongoose.connect(
         `mongodb+srv://miklasfafara:7455718@cluster0.ggsfc.mongodb.net/react-apollo-course?retryWrites=true&w=majority`,
         {
