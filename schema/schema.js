@@ -1,8 +1,20 @@
 const graphql = require('graphql');
-const {GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList, GraphQLNonNull, GraphQLBoolean} = graphql;
+const {
+    GraphQLObjectType,
+    GraphQLString,
+    GraphQLSchema,
+    GraphQLID,
+    GraphQLInt,
+    GraphQLList,
+    GraphQLNonNull,
+    GraphQLBoolean
+} = graphql;
+const DataLoader = require('dataloader');
 
 const Movies = require('../models/movie');
 const Directors = require('../models/director');
+
+const directorLoader = new DataLoader(directorIds => Directors.find({_id: {$in: directorIds}}));
 
 const MovieType = new GraphQLObjectType({
     name: 'Movie',
@@ -15,7 +27,7 @@ const MovieType = new GraphQLObjectType({
         director: {
             type: DirectorType,
             resolve(parent, args) { //параметр, который переносится из родительского запроса
-                return Directors.findById(parent.directorId)
+                return directorLoader.load(parent.directorId.toString())
             }
         }
     })
