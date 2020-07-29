@@ -50,6 +50,10 @@ const Mutation = new GraphQLObjectType({
                     throw new Error("Director's name should not be empty");
                 }
 
+                if (parseInt(age) <= 0) {
+                    throw new Error("Director's age should be a positive number");
+                }
+
                 const director = new Directors({
                     name,
                     age
