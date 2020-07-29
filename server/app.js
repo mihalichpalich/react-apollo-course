@@ -11,7 +11,10 @@ app.use(cors());
 const server = new ApolloServer({
     schema,
     playground: true,
-    introspection: true
+    introspection: true,
+    engine: {
+        reportSchema: true
+    }
 });
 
 server.listen({ port: process.env.PORT || 4000 }).then(({url}) => {
